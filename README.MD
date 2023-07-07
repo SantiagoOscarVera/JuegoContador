@@ -10,7 +10,7 @@
 
 ### Watch the demo/deploy ⚠️ ###
 
-- https://generador-miniaturas-qxni-r8q67h4e0-santiagooscarvera.vercel.app/
+- https://juego-contador-santiago-vera.netlify.app/
 
 
 ### How to run this project locally ⚙️ ###
@@ -19,7 +19,7 @@
 ```
 npm install
 ```
-3. To start your app on the local host (localhost:3000) in your terminal put:
+3. To start your app on the local host, in your terminal put:
 ```
 npm run dev
 ```
