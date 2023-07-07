@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import { Flex } from '@chakra-ui/react';
-import StartButton from './components/StartButton';
-import ClickButton from './components/ClickButton';
-import Score from './components/Score';
-import Timer from './components/Timer';
+import StartButton from './components/Bottons/StartButton';
+import ClickButton from './components/Bottons/ClickButton';
+import Score from './components/Score/Score';
+import Timer from './components/Timer/Timer';
 
 const App = () => {
   const [firstTimerStarted, setFirstTimerStarted] = useState(false); // Estado para controlar si el primer temporizador ha empezado
