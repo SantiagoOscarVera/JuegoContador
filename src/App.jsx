@@ -7,21 +7,21 @@ import Score from './components/Score';
 import Timer from './components/Timer';
 
 const App = () => {
-  const [firstTimerStarted, setFirstTimerStarted] = useState(false);
-  const [firstTimerTimeLeft, setFirstTimerTimeLeft] = useState(null);
-  const [timerStarted, setTimerStarted] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(null);
-  const [clicksLeft, setClicksLeft] = useState(0);
-  const [maxScore, setMaxScore] = useState(0);
-  const [jumpAnimation, setJumpAnimation] = useState(false);
-  const [countdownMessage, setCountdownMessage] = useState('');
+  const [firstTimerStarted, setFirstTimerStarted] = useState(false); // Estado para controlar si el primer temporizador ha empezado
+  const [firstTimerTimeLeft, setFirstTimerTimeLeft] = useState(null); // Estado para almacenar el tiempo restante del primer temporizador
+  const [timerStarted, setTimerStarted] = useState(false); // Estado para controlar si el temporizador principal ha empezado
+  const [timeLeft, setTimeLeft] = useState(null); // Estado para almacenar el tiempo restante del temporizador principal
+  const [clicksLeft, setClicksLeft] = useState(0); // Estado para almacenar la cantidad de clics restantes
+  const [maxScore, setMaxScore] = useState(0); // Estado para almacenar la puntuación máxima alcanzada
+  const [jumpAnimation, setJumpAnimation] = useState(false); // Estado para controlar la animación de salto de la imagen
+  const [countdownMessage, setCountdownMessage] = useState(''); // Estado para almacenar el mensaje de cuenta regresiva
 
-  useEffect(() => {
-    if (timeLeft !== null && timeLeft === 0) {
+  useEffect(() => { // Efecto que se ejecuta cuando el tiempo restante o la cantidad de clics cambian
+    if (timeLeft !== null && timeLeft === 0) {  // Si el tiempo se ha agotado, se detiene el temporizador y se reinicia la cantidad de clics
       setTimerStarted(false);
       setClicksLeft(0);
 
-      if (clicksLeft > maxScore) {
+      if (clicksLeft > maxScore) { // Si la cantidad de clics actual es mayor a la puntuación máxima, se actualiza la puntuación máxima y se muestra una alerta
         setMaxScore(clicksLeft);
         Swal.fire({
           title: '¡Hiciste nuevo máximo!',
@@ -38,7 +38,7 @@ const App = () => {
   }, [timeLeft, clicksLeft, maxScore]);
 
   const handleStartClick = () => {
-    if (firstTimerTimeLeft !== null && firstTimerTimeLeft > 0) {
+    if (firstTimerTimeLeft !== null && firstTimerTimeLeft > 0) { // Si el primer temporizador todavía está en marcha, no se hace nada
       return;
     }
 
@@ -47,7 +47,7 @@ const App = () => {
   };
 
   const handleButtonClick = () => {
-    if (timeLeft === null || timeLeft === 0) {
+    if (timeLeft === null || timeLeft === 0) { // Si el temporizador principal no ha empezado o ha terminado, no se hace nada
       return;
     }
 
@@ -58,14 +58,14 @@ const App = () => {
     }, 500);
   };
 
-  useEffect(() => {
+  useEffect(() => { // Efecto que se ejecuta cuando el primer temporizador ha empezado o su tiempo restante ha cambiado
     let firstTimer;
 
-    if (firstTimerStarted && firstTimerTimeLeft !== null && firstTimerTimeLeft > 0) {
+    if (firstTimerStarted && firstTimerTimeLeft !== null && firstTimerTimeLeft > 0) { // Si el primer temporizador está en marcha y todavía tiene tiempo restante, se actualiza el tiempo restante cada segundo
       firstTimer = setTimeout(() => {
         setFirstTimerTimeLeft((prevTime) => prevTime - 1);
       }, 1000);
-    } else if (firstTimerTimeLeft === 0) {
+    } else if (firstTimerTimeLeft === 0) { // Si el primer temporizador ha terminado, se detiene y se inicia el temporizador principal
       setFirstTimerStarted(false);
       setTimerStarted(true);
       setTimeLeft(5);
@@ -75,14 +75,14 @@ const App = () => {
     return () => clearTimeout(firstTimer);
   }, [firstTimerStarted, firstTimerTimeLeft]);
 
-  useEffect(() => {
+  useEffect(() => {  // Efecto que se ejecuta cuando el temporizador principal ha empezado o su tiempo restante ha cambiado
     let timer;
 
-    if (timerStarted && timeLeft !== null && timeLeft > 0) {
+    if (timerStarted && timeLeft !== null && timeLeft > 0) { // Si el temporizador principal está en marcha y todavía tiene tiempo restante, se actualiza el tiempo restante cada segundo
       timer = setTimeout(() => {
         setTimeLeft((prevTime) => prevTime - 1);
       }, 1000);
-    } else if (timeLeft === 0) {
+    } else if (timeLeft === 0) { // Si el temporizador principal ha terminado, se detiene y se reinicia la cantidad de clics y el mensaje de cuenta regresiva
       setTimerStarted(false);
       setClicksLeft(0);
       setCountdownMessage('');
@@ -90,10 +90,12 @@ const App = () => {
 
     return () => clearTimeout(timer);
   }, [timerStarted, timeLeft]);
-  useEffect(() => {
+
+  useEffect(() => { // Efecto que se ejecuta cuando el primer temporizador ha empezado o su tiempo restante ha cambiado
+
     let countdown;
 
-    if (firstTimerStarted && firstTimerTimeLeft !== null && firstTimerTimeLeft > 0) {
+    if (firstTimerStarted && firstTimerTimeLeft !== null && firstTimerTimeLeft > 0) {  // Si el primer temporizador está en marcha y todavía tiene tiempo restante, se actualiza el mensaje de cuenta regresiva según el tiempo restante
       countdown = setTimeout(() => {
         switch (firstTimerTimeLeft) {
           case 3:
